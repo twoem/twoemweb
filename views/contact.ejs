@@ -4,33 +4,55 @@
   <h1>Contact Us</h1>
   <p>Have a question or want to work with us? Fill out the form below and we'll get back to you as soon as possible.</p>
 
-  <% if (locals.status === 'success') { %>
-    <div class="success-message">
-      <p>Your message has been sent successfully!</p>
-    </div>
-  <% } else if (locals.status === 'error') { %>
-    <div class="error-message">
-      <p>There was an error sending your message. Please try again later.</p>
-    </div>
-  <% } %>
+  <div class="contact-grid">
+    <div class="contact-form">
+      <% if (locals.status === 'success') { %>
+        <div class="success-message">
+          <p>Your message has been sent successfully!</p>
+        </div>
+      <% } else if (locals.status === 'error') { %>
+        <div class="error-message">
+          <p>There was an error sending your message. Please try again later.</p>
+        </div>
+      <% } %>
 
-  <form action="/contact/send" method="post">
-    <label for="name">Full Name:</label>
-    <input type="text" id="name" name="name" required>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-    <label for="phone">Phone (optional):</label>
-    <input type="tel" id="phone" name="phone">
-    <label for="subject">Subject:</label>
-    <select id="subject" name="subject">
-      <option value="General Inquiry">General Inquiry</option>
-      <option value="Support">Support</option>
-      <option value="Sales">Sales</option>
-    </select>
-    <label for="message">Message:</label>
-    <textarea id="message" name="message" required rows="5"></textarea>
-    <button type="submit" class="cta-button">Send Message</button>
-  </form>
+      <form action="/contact/send" method="post">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="phone">Phone (optional):</label>
+        <input type="tel" id="phone" name="phone">
+        <label for="subject">Subject:</label>
+        <select id="subject" name="subject">
+          <option value="General Inquiry">General Inquiry</option>
+          <option value="Support">Support</option>
+          <option value="Sales">Sales</option>
+        </select>
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required rows="5"></textarea>
+        <button type="submit" class="cta-button">Send Message</button>
+      </form>
+    </div>
+
+    <div class="contact-info">
+      <div class="card">
+        <h3>Email Us</h3>
+        <p>Get in touch with us via email.</p>
+        <a href="mailto:<%= process.env.EMAIL_RECEIVER %>"><%= process.env.EMAIL_RECEIVER %></a>
+      </div>
+      <div class="card">
+        <h3>Call Us</h3>
+        <p>Speak to a member of our team.</p>
+        <a href="tel:<%= process.env.PHONE_NUMBER %>"><%= process.env.PHONE_NUMBER %></a>
+      </div>
+      <div class="card">
+        <h3>Visit Us</h3>
+        <p>Find us at our office location.</p>
+        <a href="<%= process.env.GOOGLE_MAP_URL %>" target="_blank">View on Google Maps</a>
+      </div>
+    </div>
+  </div>
 </main>
 
 <%- include('partials/footer') %>

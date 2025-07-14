@@ -59,14 +59,22 @@ app.post('/contact/send', (req, res) => {
     to: process.env.EMAIL_RECEIVER,
     subject: `Contact Form Submission: ${req.body.subject}`,
     html: `
-      <h2>New Contact Form Submission</h2>
-      <ul>
-        <li><strong>Name:</strong> ${req.body.name}</li>
-        <li><strong>Email:</strong> ${req.body.email}</li>
-        <li><strong>Phone:</strong> ${req.body.phone}</li>
-      </ul>
-      <h3>Message:</h3>
-      <p>${req.body.message}</p>
+      <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+        <div style="text-align: center; padding: 1rem; background-color: #f4f4f4;">
+          <img src="https://twoemcyberkagwe.onrender.com/logo.jpg" alt="Twoem Online Productions" style="width: 100px; height: 100px; border-radius: 50%;">
+          <h2>New Contact Form Submission</h2>
+        </div>
+        <div style="padding: 1rem;">
+          <h3>Contact Details</h3>
+          <ul>
+            <li><strong>Name:</strong> ${req.body.name}</li>
+            <li><strong>Email:</strong> ${req.body.email}</li>
+            <li><strong>Phone:</strong> ${req.body.phone || 'Not provided'}</li>
+          </ul>
+          <h3>Message</h3>
+          <p>${req.body.message}</p>
+        </div>
+      </div>
     `,
   };
 

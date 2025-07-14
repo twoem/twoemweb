@@ -185,6 +185,17 @@ form input, form textarea, form select {
   border-radius: 5px;
 }
 
+.contact-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.contact-info .card {
+  margin-bottom: 1rem;
+}
+
 /* Modal */
 .modal {
   display: none;
