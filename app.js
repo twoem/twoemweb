@@ -5,6 +5,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
+const ejs = require('ejs');
 require('dotenv').config();
 
 const adminRoutes = require('./routes/admin');
@@ -92,37 +93,31 @@ app.post('/contact/send', (req, res) => {
     },
   });
 
-  const mailOptions = {
-    from: `"Twoem Contact Form" <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_RECEIVER,
-    subject: `Contact Form Submission: ${req.body.subject}`,
-    html: `
-      <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-        <div style="text-align: center; padding: 1rem; background-color: #f4f4f4;">
-          <img src="https://twoemcyberkagwe.onrender.com/logo.jpg" alt="Twoem Online Productions" style="width: 100px; height: 100px; border-radius: 50%;">
-          <h2>New Contact Form Submission</h2>
-        </div>
-        <div style="padding: 1rem;">
-          <h3>Contact Details</h3>
-          <ul>
-            <li><strong>Name:</strong> ${req.body.name}</li>
-            <li><strong>Email:</strong> ${req.body.email}</li>
-            <li><strong>Phone:</strong> ${req.body.phone || 'Not provided'}</li>
-          </ul>
-          <h3>Message</h3>
-          <p>${req.body.message}</p>
-        </div>
-      </div>
-    `,
-  };
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-      res.render('contact', { title: 'Twoem | Contact', status: 'error' });
+  ejs.renderFile(__dirname + '/views/emails/contact.ejs', {
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
+    message: req.body.message
+  }, (err, data) => {
+    if (err) {
+      console.log(err);
     } else {
-      console.log('Email sent: ' + info.response);
-      res.render('contact', { title: 'Twoem | Contact', status: 'success' });
+      const mailOptions = {
+        from: `"Twoem Contact Form" <${process.env.EMAIL_USER}>`,
+        to: process.env.EMAIL_RECEIVER,
+        subject: `Contact Form Submission: ${req.body.subject}`,
+        html: data
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+          res.render('contact', { title: 'Twoem | Contact', status: 'error' });
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.render('contact', { title: 'Twoem | Contact', status: 'success' });
+        }
+      });
     }
   });
 });
