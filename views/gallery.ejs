@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+<main>
+  <h1>Gallery</h1>
+
+  <div class="filters">
+    <button data-filter="all">All</button>
+    <button data-filter="printing">Printing</button>
+    <button data-filter="training">Training</button>
+    <button data-filter="internet">Internet</button>
+    <button data-filter="government">Government Support</button>
+    <button data-filter="workshops">Workshops</button>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="grid-item" data-category="printing"><img src="/images/gallery/printing1.jpg" alt="Printing"></div>
+    <div class="grid-item" data-category="printing"><img src="/images/gallery/printing2.jpg" alt="Printing"></div>
+    <div class="grid-item" data-category="training"><img src="/images/gallery/training1.jpg" alt="Training"></div>
+    <div class="grid-item" data-category="training"><img src="/images/gallery/training2.jpg" alt="Training"></div>
+    <div class="grid-item" data-category="internet"><img src="/images/gallery/internet1.jpg" alt="Internet"></div>
+    <div class="grid-item" data-category="internet"><img src="/images/gallery/internet2.jpg" alt="Internet"></div>
+    <div class="grid-item" data-category="government"><img src="/images/gallery/government1.jpg" alt="Government Support"></div>
+    <div class="grid-item" data-category="government"><img src="/images/gallery/government2.jpg" alt="Government Support"></div>
+    <div class="grid-item" data-category="workshops"><img src="/images/gallery/workshops1.jpg" alt="Workshops"></div>
+    <div class="grid-item" data-category="workshops"><img src="/images/gallery/workshops2.jpg" alt="Workshops"></div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

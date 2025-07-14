@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+
+<main>
+  <div class="loading-container">
+    <img src="/logo.png" alt="Loading..." class="rotating-logo">
+    <p>Your document is loading...</p>
+  </div>
+</main>
+
+<script>
+  setTimeout(() => {
+    window.location.href = '/download-file?file=<%= file %>';
+    setTimeout(() => {
+      window.location.href = '/downloads?status=success';
+    }, 1000);
+  }, 3000);
+</script>
+
+<%- include('partials/footer') %>

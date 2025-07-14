@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+
+<main>
+  <h1>Contact Us</h1>
+  <form action="/contact/send" method="post">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <label for="phone">Phone (optional):</label>
+    <input type="tel" id="phone" name="phone">
+    <label for="subject">Subject:</label>
+    <select id="subject" name="subject">
+      <option value="General Inquiry">General Inquiry</option>
+      <option value="Support">Support</option>
+      <option value="Sales">Sales</option>
+    </select>
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" required></textarea>
+    <button type="submit">Send</button>
+  </form>
+</main>
+
+<%- include('partials/footer') %>

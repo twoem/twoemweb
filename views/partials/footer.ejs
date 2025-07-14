@@ -1,0 +1,42 @@
+<footer>
+    <div class="quick-links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/gallery">Gallery</a></li>
+        <li><a href="/downloads">Downloads</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="#" id="privacy-policy-link">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div class="contact-info">
+      <h3>Contact Info</h3>
+      <p><a href="<%= process.env.WHATSAPP_URL %>">WhatsApp</a></p>
+      <p><a href="tel:<%= process.env.PHONE_NUMBER %>">Phone</a></p>
+      <p><a href="mailto:<%= process.env.EMAIL_RECEIVER %>">Email</a></p>
+    </div>
+    <div class="social-icons">
+      <h3>Social Media</h3>
+      <a href="#"><img src="/images/facebook.png" alt="Facebook"></a>
+      <a href="#"><img src="/images/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="/images/linkedin.png" alt="LinkedIn"></a>
+    </div>
+    <div class="newsletter-signup">
+      <h3>Newsletter Signup</h3>
+      <form action="/newsletter-signup" method="post">
+        <input type="email" name="email" placeholder="Enter your email">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </footer>
+  <div id="privacy-policy-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2>Privacy Policy</h2>
+      <p>This is a placeholder for the privacy policy.</p>
+    </div>
+  </div>
+  <script src="/js/main.js"></script>
+</body>
+</html>
