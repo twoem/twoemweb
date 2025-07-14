@@ -47,7 +47,7 @@ app.post('/contact/send', (req, res) => {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
-    secure: true,
+    secure: true, // true for 465, false for other ports
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
@@ -55,19 +55,28 @@ app.post('/contact/send', (req, res) => {
   });
 
   const mailOptions = {
-    from: req.body.email,
+    from: `"Twoem Contact Form" <${process.env.EMAIL_USER}>`,
     to: process.env.EMAIL_RECEIVER,
     subject: `Contact Form Submission: ${req.body.subject}`,
-    text: `Name: ${req.body.name}\nEmail: ${req.body.email}\nPhone: ${req.body.phone}\n\nMessage: ${req.body.message}`,
+    html: `
+      <h2>New Contact Form Submission</h2>
+      <ul>
+        <li><strong>Name:</strong> ${req.body.name}</li>
+        <li><strong>Email:</strong> ${req.body.email}</li>
+        <li><strong>Phone:</strong> ${req.body.phone}</li>
+      </ul>
+      <h3>Message:</h3>
+      <p>${req.body.message}</p>
+    `,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
-      res.redirect('/contact?status=error');
+      res.render('contact', { title: 'Twoem | Contact', status: 'error' });
     } else {
       console.log('Email sent: ' + info.response);
-      res.redirect('/contact?status=success');
+      res.render('contact', { title: 'Twoem | Contact', status: 'success' });
     }
   });
 });
