@@ -22,6 +22,8 @@
           <% if (locals.isAuthenticated) { %>
             <li><a href="/admin/dashboard">Admin</a></li>
             <li><a href="/admin/logout">Logout</a></li>
+          <% } else { %>
+            <li><a href="/admin/login">Admin Login</a></li>
           <% } %>
         </ul>
         <button id="dark-mode-toggle">Toggle Dark Mode</button>

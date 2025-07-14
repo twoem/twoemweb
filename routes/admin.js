@@ -54,9 +54,10 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
     }
 
     const downloadsEjs = fs.readFileSync('views/downloads.ejs', 'utf-8');
-    const newLink = `<li><a href="/download?file=${type}/${file.name}">${title}</a>${type === 'eulogy' ? `<span>${expiry}</span>` : ''}</li>`;
+    const newLink = `      <li><a href="/download?file=${type}/${file.name}">${title}</a>${type === 'eulogy' ? `<span>${expiry}</span>` : ''}</li>\n`;
     const sectionClass = type === 'public' ? 'public-documents' : 'eulogy-documents';
-    const updatedEjs = downloadsEjs.replace(`</section>\n\n  <section class="${sectionClass}">`, `${newLink}\n      </section>\n\n      <section class="${sectionClass}">`);
+    const regex = new RegExp(`(<section class="${sectionClass}">[\\s\\S]*?<ul>)`);
+    const updatedEjs = downloadsEjs.replace(regex, `$1\n${newLink}`);
     fs.writeFileSync('views/downloads.ejs', updatedEjs);
 
     req.flash('success_msg', 'File uploaded and downloads page updated.');
