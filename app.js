@@ -72,5 +72,10 @@ app.post('/contact/send', (req, res) => {
   });
 });
 
+app.post('/newsletter-signup', (req, res) => {
+  // In a real application, you would add the user's email to a mailing list here.
+  res.redirect('/?newsletter=success');
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
