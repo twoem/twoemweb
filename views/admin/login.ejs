@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+<%- include('../partials/messages') %>
+
+<main class="container">
+  <h1>Admin Login</h1>
+  <form action="/admin/login" method="post">
+    <div>
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" required>
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required>
+    </div>
+    <button type="submit" class="cta-button">Login</button>
+  </form>
+</main>
+
+<%- include('../partials/footer') %>

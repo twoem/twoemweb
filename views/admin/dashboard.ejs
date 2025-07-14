@@ -1,0 +1,46 @@
+<%- include('../partials/header') %>
+<%- include('../partials/messages') %>
+
+<main class="container">
+  <h1>Admin Dashboard</h1>
+  <p>Welcome, <%= username %>!</p>
+
+  <h2>Upload a New Download</h2>
+  <form action="/admin/upload" method="post" enctype="multipart/form-data">
+    <div>
+      <label for="file">File</label>
+      <input type="file" name="file" id="file" required>
+    </div>
+    <div>
+      <label for="type">Type</label>
+      <select name="type" id="type">
+        <option value="public">Public Document</option>
+        <option value="eulogy">Eulogy Document</option>
+      </select>
+    </div>
+    <div>
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" required>
+    </div>
+    <div>
+      <label for="expiry">Expiry (for eulogies, e.g., "Expires in 7 days")</label>
+      <input type="text" name="expiry" id="expiry">
+    </div>
+    <button type="submit" class="cta-button">Upload</button>
+  </form>
+
+  <h2>Delete a Download</h2>
+  <form action="/admin/delete" method="post">
+    <div>
+      <label for="fileToDelete">File</label>
+      <select name="fileToDelete" id="fileToDelete">
+        <% files.forEach(file => { %>
+          <option value="<%= file.path %>"><%= file.name %></option>
+        <% }) %>
+      </select>
+    </div>
+    <button type="submit" class="cta-button">Delete</button>
+  </form>
+</main>
+
+<%- include('../partials/footer') %>

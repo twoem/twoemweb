@@ -3,7 +3,11 @@ const app = express();
 const nodemailer = require('nodemailer');
 const session = require('express-session');
 const flash = require('connect-flash');
+const fs = require('fs');
+const fileUpload = require('express-fileupload');
 require('dotenv').config();
+
+const adminRoutes = require('./routes/admin');
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -14,12 +18,16 @@ app.use(session({
   saveUninitialized: false
 }));
 app.use(flash());
+app.use(fileUpload());
 
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
+  res.locals.isAuthenticated = req.session.isAuthenticated;
   next();
 });
+
+app.use('/admin', adminRoutes);
 
 app.get('/', (req, res) => {
   res.render('home', { title: 'Twoem | Home' });
@@ -39,7 +47,23 @@ app.get('/downloads', (req, res) => {
 
 app.get('/download', (req, res) => {
   const file = req.query.file;
-  res.render('loading', { title: 'Twoem | Loading...', file: file });
+  const filePath = `public/downloads/${file}`;
+
+  fs.stat(filePath, (err, stats) => {
+    if (err) {
+      console.log(err);
+      req.flash('error_msg', 'File not found.');
+      return res.redirect('/downloads');
+    }
+
+    const fileSize = (stats.size / 1024 / 1024).toFixed(2); // in MB
+    res.render('loading', {
+      title: 'Twoem | Loading...',
+      file: file,
+      fileName: file.split('/').pop(),
+      fileSize: fileSize,
+    });
+  });
 });
 
 app.get('/download-file', (req, res) => {
@@ -48,9 +72,6 @@ app.get('/download-file', (req, res) => {
     if (err) {
       console.log(err);
       req.flash('error_msg', 'Could not download the file.');
-      res.redirect('/downloads');
-    } else {
-      req.flash('success_msg', 'Your download will start shortly.');
       res.redirect('/downloads');
     }
   });
