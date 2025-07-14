@@ -1,11 +1,25 @@
 const express = require('express');
 const app = express();
 const nodemailer = require('nodemailer');
+const session = require('express-session');
+const flash = require('connect-flash');
 require('dotenv').config();
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  next();
+});
 
 app.get('/', (req, res) => {
   res.render('home', { title: 'Twoem | Home' });
@@ -20,7 +34,7 @@ app.get('/gallery', (req, res) => {
 });
 
 app.get('/downloads', (req, res) => {
-  res.render('downloads', { title: 'Twoem | Downloads', status: req.query.status });
+  res.render('downloads', { title: 'Twoem | Downloads' });
 });
 
 app.get('/download', (req, res) => {
@@ -30,13 +44,16 @@ app.get('/download', (req, res) => {
 
 app.get('/download-file', (req, res) => {
   const file = req.query.file;
-  setTimeout(() => {
-    res.download(`public/downloads/${file}`, (err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
-  }, 3000);
+  res.download(`public/downloads/${file}`, (err) => {
+    if (err) {
+      console.log(err);
+      req.flash('error_msg', 'Could not download the file.');
+      res.redirect('/downloads');
+    } else {
+      req.flash('success_msg', 'Your download will start shortly.');
+      res.redirect('/downloads');
+    }
+  });
 });
 
 app.get('/contact', (req, res) => {
