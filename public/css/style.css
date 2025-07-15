@@ -336,3 +336,54 @@ body.dark-mode .modal-content {
     transform: rotate(360deg);
   }
 }
+
+/* Services Page */
+.hero-section {
+  position: relative;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.gradient-text {
+  background: -webkit-linear-gradient(#007bff, #0056b3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.section-padding {
+  padding: 4rem 0;
+}
+
+.contact-icon {
+  background: #007bff;
+  color: #fff;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.whatsapp-btn {
+  background-color: #25d366;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
